@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Usage:
-#sudo bash run-huawei-abonly.sh  [/path/to/system.img] [version] [model device] [huawei animation]
+#sudo bash run-huawei-ab-a13-yahia.sh [/path/to/system.img] 
 #cleanups
 #A13 version
 umount d
@@ -14,18 +14,9 @@ origin="$(dirname "$origin")"
 
 targetArch=64
 srcFile="$1"
-versionNumber="$2"
-model="$3"
-bootanim="$4"
 
 
-if [ ! -f "$srcFile" ];then
-	echo "Usage: sudo bash run-huawei-ab.sh [/path/to/system.img] [version] [model device] [bootanimation]"
-	echo "version=LeaOS, LeaOS-PHH , crDRom v316 - Mod Iceows , LiR v316 - Mod Iceows , Caos v316 - Mod Iceows"
-	echo "device=ANE-LX1"
-	echo "bootanimation=[Y/N]"
-	exit 1
-fi
+
 
 "$origin"/simg2img "$srcFile" s-ab-raw.img || cp "$srcFile" s-ab-raw.img
 
@@ -38,24 +29,6 @@ mount -o loop,rw s-ab-raw.img d
 (
 	#----------------------------- Missing Huawei root folder -----------------------------------------------------		
 	cd d
-	
-	rm -rf splash2
-	rm -rf modem_log
-	
-	mkdir splash2
-	chown root:root splash2
-	chmod 777 splash2
-	xattr -w security.selinux u:object_r:rootfs:s0 splash2
-	
-	mkdir modem_log
-	chown root:root modem_log
-	chmod 777 modem_log
-	xattr -w security.selinux u:object_r:rootfs:s0 modem_log
-	
-	#mkdir sec_storage
-	#chown root:root sec_storage
-	#chmod 777 sec_storage
-	#xattr -w security.selinux u:object_r:rootfs:s0 sec_storage
 	
 	
 	cd system
