@@ -46,12 +46,19 @@ mount -o loop,rw s-ab-raw.img d
 	rm -rf "system_ext/apex/com.android.vndk.v31"
 	rm -rf "system_ext/apex/com.android.vndk.v32"
 	
-	# remove super-user
-        touch phh/secure
+
+        # Remove Superuser 
+	touch phh/secure
 	rm bin/phh-su
 	rm etc/init/su.rc
-	rm bin/phh-securize.sh
-	rm -Rf {app,priv-app}/me.phh.superuser/	cd ../d
+	#rm bin/phh-securize.sh
+	rm bin/phh-root.sh
+	rm -Rf priv-app/SuperUser
+	rm -Rf {app,priv-app}/me.phh.superuser/
+	rm xbin/su || true
+	
+	
+	cd ../d
 
 	
 
