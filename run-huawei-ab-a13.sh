@@ -317,7 +317,15 @@ mount -o loop,rw s-ab-raw.img d
 	#----------------------------- SELinux rules Now include in huawei.te --------------------------	
 	
 	
-	
+	#-----------------------------Remove Superuser  --------------------------------------------------------      
+	touch phh/secure
+	rm bin/phh-su
+	rm etc/init/su.rc
+	#rm bin/phh-securize.sh
+	rm bin/phh-root.sh
+	rm -Rf priv-app/SuperUser
+	rm -Rf {app,priv-app}/me.phh.superuser/
+	rm xbin/su || true
 
 	#-----------------------------vndk-lite --------------------------------------------------------	
 	cd ../d
