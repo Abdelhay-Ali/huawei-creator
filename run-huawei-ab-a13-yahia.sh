@@ -45,8 +45,13 @@ mount -o loop,rw s-ab-raw.img d
 	rm -rf "system_ext/apex/com.android.vndk.v30"
 	rm -rf "system_ext/apex/com.android.vndk.v31"
 	rm -rf "system_ext/apex/com.android.vndk.v32"
-	#-----------------------------vndk-lite ----
-	cd ../d
+	
+	# remove super-user
+        touch phh/secure
+	rm bin/phh-su
+	rm etc/init/su.rc
+	rm bin/phh-securize.sh
+	rm -Rf {app,priv-app}/me.phh.superuser/	cd ../d
 
 	
 
