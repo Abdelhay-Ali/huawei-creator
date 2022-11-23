@@ -2,23 +2,15 @@
 
 #Usage:
 #sudo bash run-huawei-ab-a13-yahia.sh [/path/to/system.img] 
-#cleanups
-#A13 version
+
 umount d
 
 set -ex
-
-origin="$(readlink -f -- "$0")"
-origin="$(dirname "$origin")"
-
-
-targetArch=64
 srcFile="$1"
 
 
 
-
-"$origin"/simg2img "$srcFile" s-ab-raw.img || cp "$srcFile" s-ab-raw.img
+cp "$srcFile" s-ab-raw.img
 
 rm -Rf tmp
 mkdir -p d tmp
@@ -27,19 +19,13 @@ resize2fs s-ab-raw.img 5000M
 e2fsck -E unshare_blocks -y -f s-ab-raw.img
 mount -o loop,rw s-ab-raw.img d
 (
-	#----------------------------- Missing Huawei root folder -----------------------------------------------------		
 	cd d
 	
 	
 	cd system
 		
 		
-	#---------------------------------Setting properties -------------------------------------------------
-	
-
-	
-	
-	
+		
 	# Remove non use apex vndk
 	rm -rf "system_ext/apex/com.android.vndk.v29"
 	rm -rf "system_ext/apex/com.android.vndk.v30"
@@ -49,12 +35,12 @@ mount -o loop,rw s-ab-raw.img d
 
         # Remove Superuser 
 	touch phh/secure
-	rm bin/phh-su
+	rm bin/phh-su || true
 	rm etc/init/su.rc
-	#rm bin/phh-securize.sh
-	rm bin/phh-root.sh
-	rm -Rf priv-app/SuperUser
-	rm -Rf {app,priv-app}/me.phh.superuser/
+	#rm bin/phh-securize.sh || true
+	rm bin/phh-root.sh || true
+	rm -Rf priv-app/SuperUser || true
+	rm -Rf {app,priv-app}/me.phh.superuser/ || true
 	rm xbin/su || true
 	
 	
